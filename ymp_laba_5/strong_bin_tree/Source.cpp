@@ -12,16 +12,11 @@ void task(TrieTree& t, int is_vowels = -1, std::string word = "")
 			std::cout << word << '\n';
 
 		for (size_t i = 0; i < 26; ++i)
-		{
 			if (t->ptrs[i])
-			{
-				int tmp_is_vowels = vowels.count(char(i + 'a'));
 				if (is_vowels == -1)
-					task(t->ptrs[i], tmp_is_vowels, word + char(i + 'a'));
+					task(t->ptrs[i], vowels.count(char(i + 'a')), word + char(i + 'a'));
 				else
-					task(t->ptrs[i], is_vowels == 1 && !tmp_is_vowels ? 0 : is_vowels == 0 && tmp_is_vowels ? 1 : -2, word + char(i + 'a'));
-			}
-		}
+					task(t->ptrs[i], is_vowels == 1 && !vowels.count(char(i + 'a')) ? 0 : is_vowels == 0 && vowels.count(char(i + 'a')) ? 1 : -2, word + char(i + 'a'));
 	}
 }
 
