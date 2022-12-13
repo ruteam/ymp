@@ -2,25 +2,27 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class Car
 {
 private:
-	std::string brand;
-	std::string state_number;
-	std::string surname;
-	std::string fname;
-	std::string patronymic;
+	string brand;
+	string state_number;
+	string surname;
+	string firstname;
+	string patronymic;
 public:
 	Car();
-	Car(std::string brand, std::string state_number, std::string surname, std::string fname, std::string patronymic);
+	Car(string brand, string state_number, string surname, string firstname, string patronymic);
 	
-	std::string get_brand() const;
-	std::string get_state_number() const;
-	std::string get_fio() const;
+	string get_brand() const;
+	string get_state_number() const;
+	string get_fio() const;
 
-	void set_brand(std::string _brand);
-	void set_state_number(std::string _state_number);
-	void set_fio(std::string _surname, std::string _fname, std::string _patronymic);
+	void set_brand(string _brand);
+	void set_state_number(string _state_number);
+	void set_fio(string _surname, string _firstname, string _patronymic);
 	
 	int compare(const Car& tmp) const;
 	virtual void print();

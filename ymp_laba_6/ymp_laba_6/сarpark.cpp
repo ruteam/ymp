@@ -5,46 +5,36 @@ CarPark::CarPark()
 	: name("") 
 {}
 
-CarPark::CarPark(std::string name)
+CarPark::CarPark(string name)
 	: name(name) 
 {}
 
-std::string CarPark::get_name() const
+string CarPark::get_name() const
 {
 	return name;
 }
 
-void CarPark::set_name(std::string _name)
+void CarPark::set_name(string _name)
 {
 	name = _name;
 }
 
-void CarPark::adding_by_pointer(CInfo ptr)
+void CarPark::adding_by_pointer(PInfo ptr)
 {
-	std::list<CInfo>::iterator beg = list_of_cars.begin();
+	list<PInfo>::iterator beg = list_of_cars.begin();
 	while (beg != list_of_cars.end() && (*beg)->compare(*ptr) == -1)
 		++beg;
-	list_of_cars.insert(beg, std::move(ptr));
+	list_of_cars.insert(beg, move(ptr));
 }
 
-void CarPark::add_to_head(CInfo ptr)
+void CarPark::erase_if(function<bool(const PInfo&)> function)
 {
-	list_of_cars.push_front(std::move(ptr));
-}
-
-void CarPark::add_to_tail(CInfo ptr)
-{
-	list_of_cars.push_back(std::move(ptr));
-}
-
-void CarPark::erase_if(std::function<bool(const CInfo&)> function)
-{
-	list_of_cars.erase(std::remove_if(list_of_cars.begin(), list_of_cars.end(), function), list_of_cars.end());
+	list_of_cars.erase(remove_if(list_of_cars.begin(), list_of_cars.end(), function), list_of_cars.end());
 }
 
 void CarPark::sort()
 {
-	list_of_cars.sort([](const CInfo& ptrFirst, const CInfo& ptrSecond)
+	list_of_cars.sort([](const PInfo& ptrFirst, const PInfo& ptrSecond)
 	{
 		return ptrFirst->compare(*ptrSecond) == -1;
 	});
@@ -52,7 +42,7 @@ void CarPark::sort()
 
 void CarPark::print()
 {
-	std::cout << "\n\t- " << name << " -\n";
-	for (const CInfo& ptr : list_of_cars)
+	cout << "\n\t- " << name << " -\n";
+	for (const PInfo& ptr : list_of_cars)
 		ptr->print();
 }

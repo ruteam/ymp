@@ -1,42 +1,42 @@
 #include "car.h"
 
 Car::Car()
-	: brand(""), state_number(""), surname(""), fname(""), patronymic("")
+	: brand(""), state_number(""), surname(""), firstname(""), patronymic("")
 {}
 
-Car::Car(std::string brand, std::string state_number, std::string surname, std::string fname, std::string patronymic)
-	: brand(brand), state_number(state_number), surname(surname), fname(fname), patronymic(patronymic)
+Car::Car(string brand, string state_number, string surname, string firstname, string patronymic)
+	: brand(brand), state_number(state_number), surname(surname), firstname(firstname), patronymic(patronymic)
 {}
 
-std::string Car::get_brand() const
+string Car::get_brand() const
 {
 	return brand;
 }
 
-std::string Car::get_state_number() const
+string Car::get_state_number() const
 {
 	return state_number;
 }
 
-std::string Car::get_fio() const
+string Car::get_fio() const
 {
-	return surname + ' ' + fname + ' ' + patronymic;
+	return surname + ' ' + firstname + ' ' + patronymic;
 }
 
-void Car::set_brand(std::string _brand)
+void Car::set_brand(string _brand)
 {
 	brand = _brand;
 }
 
-void Car::set_state_number(std::string _state_number)
+void Car::set_state_number(string _state_number)
 {
 	state_number = _state_number;
 }
 
-void Car::set_fio(std::string _surname, std::string _fname, std::string _patronymic)
+void Car::set_fio(string _surname, string _firstname, string _patronymic)
 {
 	surname = _surname;
-	fname = _fname;
+	firstname = _firstname;
 	patronymic = _patronymic;
 }
 
@@ -44,8 +44,8 @@ int Car::compare(const Car& tmp) const
 {
 	int result = 1;
 	if (surname < tmp.surname ||
-		surname == tmp.surname && fname < tmp.fname
-		|| surname == tmp.surname && fname == fname && patronymic < tmp.patronymic)
+		surname == tmp.surname && firstname < tmp.firstname || 
+		surname == tmp.surname && firstname == firstname && patronymic < tmp.patronymic)
 		result = -1;
 	else
 		result = 0;
@@ -54,6 +54,6 @@ int Car::compare(const Car& tmp) const
 
 void Car::print()
 {
-	std::cout << get_fio() << '\n' << brand << '\n' << state_number << '\n';
+	cout << get_fio() << '\n' << brand << '\n' << state_number << '\n';
 }
 
