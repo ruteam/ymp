@@ -20,7 +20,6 @@ void task(TrieTree& t, int is_vowels = -1, std::string word = "")
 	}
 }
 
-
 int main()
 {
 	std::ifstream file("text.txt");
@@ -37,3 +36,5 @@ int main()
 	clear(root);
 	return 0;
 }
+
+

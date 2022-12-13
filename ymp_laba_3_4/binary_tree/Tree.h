@@ -58,3 +58,48 @@ void Print(Tree t, int level)
 		Print(t->left, level + 1);
 	}
 }
+
+void find_element(Tree& r, Tree& q)
+{
+	if (r->right)
+		find_element(r->right, q);
+	else
+	{
+		q->info = r->info;
+		q->count = r->count;
+		q = r;
+		r = r->left;
+	}
+}
+
+bool delete_element(Tree& t, TInfo elem)
+{
+	bool result = false;
+	if (t)
+	{
+		if (elem < t->info)
+			result = delete_element(t->left, elem);
+		else
+			if (elem > t->info)
+				result = delete_element(t->right, elem);
+			else
+			{
+				if (t->count > 1)
+					t->count--;
+				else
+				{
+					Tree q = t;
+					if (!t->right)
+						t = q->left;
+					else
+						if (!t->left)
+							t = q->right;
+						else
+							find_element(q->left, q);
+					delete q;
+				}
+				result = true;
+			}
+	}
+	return result;
+}
