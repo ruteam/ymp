@@ -15,15 +15,15 @@ private:
 	std::list<CInfo> list_of_cars;
 public:
 	CarPark();
-	CarPark(const std::string& name);
+	CarPark(std::string name);
 
 	std::string get_name() const;
 
-	void set_name(const std::string& _name);
+	void set_name(std::string _name);
 
-	void adding_by_pointer(CInfo ptrCar);
-	void add_to_head(CInfo ptrCar);
-	void add_to_tail(CInfo ptrCar);
+	void adding_by_pointer(CInfo ptr);
+	void add_to_head(CInfo ptr);
+	void add_to_tail(CInfo ptr);
 
 	void erase_if(std::function<bool(const CInfo&)> function);
 	void sort();
