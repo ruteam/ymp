@@ -41,7 +41,6 @@ void init_carpark(CarPark& carpark, std::ifstream& file)
 			carpark.adding_by_pointer(std::move(std::make_unique<Cargo>(cargo)));
 		}
 	}
-	file.close();
 }
 
 void task(CarPark& carpark)
@@ -65,6 +64,6 @@ int main()
 	std::cout << "\n---------------------------------\n";
 	task(carpark);
 	carpark.print();
-	
+	file.close();
 	std::cin.get();
 }
