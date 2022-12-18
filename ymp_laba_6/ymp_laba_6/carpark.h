@@ -17,13 +17,14 @@ private:
 public:
 	CarPark();
 	CarPark(string name);
+	~CarPark();
 
 	string get_name() const;
 
 	void set_name(string _name);
 
 	void adding_by_pointer(PInfo ptr);
-	void erase_if(function<bool(const PInfo&)> function);
+	void remove(function<bool(const PInfo&)> _Pred);
 	void sort();
 	void print();
 };

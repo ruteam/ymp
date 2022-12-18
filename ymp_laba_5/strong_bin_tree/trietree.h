@@ -6,7 +6,7 @@ struct NODE
 {
 	NODE* ptrs[26];
 	bool eow = false;
-	NODE()
+	NODE(bool eow = false): eow(eow)
 	{
 		for (int i = 0; i < 26; ++i)
 			ptrs[i] = nullptr;
@@ -37,7 +37,7 @@ void add(TrieTree& t, const std::string word, size_t i)
 		add(t->ptrs[word[i] - 'a'], word, i + 1);
 }
 
-bool all_ptr_empty(TrieTree t)
+bool all_ptrs_empty(TrieTree t)
 {
 	bool result = true;
 	size_t i = 0;
@@ -57,7 +57,7 @@ void del(TrieTree& t, const std::string word, size_t i)
 		else
 		{
 			t->eow = false;
-			if (all_ptr_empty(t))
+			if (all_ptrs_empty(t))
 			{
 				delete t;
 				t = nullptr;

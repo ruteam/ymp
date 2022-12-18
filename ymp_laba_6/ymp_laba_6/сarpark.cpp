@@ -2,12 +2,17 @@
 #include "carpark.h"
 
 CarPark::CarPark()
-	: name("") 
+	: name("unnamed") 
 {}
 
 CarPark::CarPark(string name)
 	: name(name) 
 {}
+
+CarPark::~CarPark()
+{
+	name.clear();
+}
 
 string CarPark::get_name() const
 {
@@ -27,9 +32,9 @@ void CarPark::adding_by_pointer(PInfo ptr)
 	list_of_cars.insert(beg, move(ptr));
 }
 
-void CarPark::erase_if(function<bool(const PInfo&)> function)
+void CarPark::remove(function<bool(const PInfo&)> _Pred)
 {
-	list_of_cars.erase(remove_if(list_of_cars.begin(), list_of_cars.end(), function), list_of_cars.end());
+	list_of_cars.erase(remove_if(list_of_cars.begin(), list_of_cars.end(), _Pred), list_of_cars.end());
 }
 
 void CarPark::sort()

@@ -4,8 +4,8 @@ Passenger::Passenger()
 	: type_of_body(""), model(""), color(""), Car()
 {}
 
-Passenger::Passenger(string type_of_body, string model, string color, string brand, string state_number, string surname, string firstname, string patronymic)
-	: type_of_body(type_of_body), model(model), color(color), Car(brand, state_number, surname, firstname, patronymic)
+Passenger::Passenger(string type_of_body, string model, string color, string brand, string state_number, string surname, string firstname, string middlename)
+	: type_of_body(type_of_body), model(model), color(color), Car(brand, state_number, surname, firstname, middlename)
 {}
 
 string Passenger::get_type_of_body() const
@@ -40,7 +40,7 @@ void Passenger::set_color(string _color)
 
 void Passenger::print()
 {
-	cout << "\n\t| Passenger |\n";
+	cout << "\n\t| Легковой |\n";
 	Car::print();
 	cout << type_of_body << '\n' << model << '\n' << color << '\n';
 }

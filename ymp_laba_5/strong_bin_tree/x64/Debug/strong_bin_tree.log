@@ -1,4 +1,4 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (strong_bin_tree.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   Source.cpp
-D:\GitHub\ymp\ymp_laba_5\strong_bin_tree\Source.cpp(17,72): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\GitHub\ymp\ymp_laba_5\strong_bin_tree\Source.cpp(124,72): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
   strong_bin_tree.vcxproj -> D:\GitHub\ymp\ymp_laba_5\x64\Debug\trie_tree.exe

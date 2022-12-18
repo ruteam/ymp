@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 class Car
@@ -11,10 +10,10 @@ private:
 	string state_number;
 	string surname;
 	string firstname;
-	string patronymic;
+	string middlename;
 public:
 	Car();
-	Car(string brand, string state_number, string surname, string firstname, string patronymic);
+	Car(string brand, string state_number, string surname, string firstname, string middlename);
 	
 	string get_brand() const;
 	string get_state_number() const;

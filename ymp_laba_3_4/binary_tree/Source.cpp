@@ -443,17 +443,103 @@ int task_3_1(Tree t)
 	return count;
 }
 
-//// *????????????* ////
-int task_4(Tree t, int max = 0)
+int task_4(Tree t)
 {
+	int max = abs(t->info);
 	if (t)
 	{
 		if (t->left)
-			task_4(t->left, abs(t->info) > max ? abs(t->info): max);
+			max = task_4(t->left) > max ? task_4(t->left) : max;
 		if (t->right)
-			task_4(t->right, abs(t->info) > max ? abs(t->info) : max);
+			max = task_4(t->right) > max ? task_4(t->right) : max;
 	}
 	return max;
+}
+
+int task_4_1(Tree t)
+{
+	if (t)
+	{
+		queue<Tree> q;
+		int max = t->info;
+		q.push(t);
+		while (!q.empty())
+		{
+			Tree tmp = q.front();
+			q.pop();
+			if (abs(tmp->info) > max)
+				max = abs(tmp->info);
+			if (tmp->left)
+				q.push(tmp->left);
+			if (tmp->right)
+				q.push(tmp->right);
+		}
+		return max;
+	}
+}
+
+int task_5(Tree t)
+{
+	int result;
+	if (t)
+		if (!t->left && !t->right)
+			result = t->info;
+		else if (t->left)
+			result = task_5(t->left);
+	return result;
+}
+
+int task_5_1(Tree t)
+{
+	if (t)
+	{
+		queue<Tree> q;
+		q.push(t);
+		int result;
+		while (!q.empty())
+		{
+			Tree tmp = q.front();
+			q.pop();
+			if (tmp->left)
+				q.push(tmp->left);
+			else if (!tmp->left && !tmp->right)
+				result = tmp->info;
+		}
+		return result;
+	}
+}
+
+void task_6(Tree& t)
+{
+	if (t)
+	{
+		if (t->info < 0)
+			t->info = abs(t->info);
+		if (t->left)
+			task_6(t->left);
+		if (t->right)
+			task_6(t->right);
+	}
+}
+
+void task_6_1(Tree& t)
+{
+	if (t)
+	{
+		queue<Tree> q;
+		q.push(t);
+		while (!q.empty())
+		{
+			Tree tmp = q.front();
+			q.pop();
+			if (tmp->info < 0)
+				tmp->info = abs(tmp->info);
+			if (tmp->left)
+				q.push(tmp->left);
+			if (tmp->right)
+				q.push(tmp->right);
+		}
+	}
 }
 
 int main()
@@ -493,7 +579,40 @@ int main()
 	std::cout << "\n\n========[ TASK 4 ]========\n";
 	std::cout << task_4(root);
 	std::cout << '\n';
-	//std::cout << task_3_1(root);
+	std::cout << task_4_1(root);
+
+	//=============[ TASK 5 ]=============
+	std::cout << "\n\n========[ TASK 5 ]========\n";
+	std::cout << task_5(root);
+	std::cout << '\n';
+	std::cout << task_5_1(root);
+	
+	//=============[ TASK 6 ]=============
+	std::cout << "\n\n========[ TASK 6 ]========\n";
+	{
+		ifstream file("tree.txt");
+		file >> count;
+		Tree tmp_root = Build_Balance(file, count);
+		task_6(tmp_root);
+		Print(tmp_root, 0);
+		Clear(tmp_root);
+	}
+	{
+		ifstream file("tree.txt");
+		file >> count;
+		Tree tmp_root = Build_Balance(file, count);
+		task_6_1(tmp_root);
+		Print(tmp_root, 0);
+		Clear(tmp_root);
+	}
+	std::cout << '\n';
+	
+	//=============[ TASK 7 ]=============
+	std::cout << "\n\n========[ TASK 7 ]========\n";
+	std::cout << task_5(root);
+	std::cout << '\n';
+	std::cout << task_5_1(root);
+
 
 	Clear(root);
 	std::cin.get();
