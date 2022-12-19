@@ -23,6 +23,21 @@ string Car::get_fio() const
 	return surname + ' ' + firstname + ' ' + middlename;
 }
 
+string Car::get_firstname() const
+{
+	return firstname;
+}
+
+string Car::get_surname() const
+{
+	return surname;
+}
+
+string Car::get_middlename() const
+{
+	return middlename;
+}
+
 void Car::set_brand(string _brand)
 {
 	brand = _brand;

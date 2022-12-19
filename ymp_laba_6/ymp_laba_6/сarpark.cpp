@@ -24,22 +24,22 @@ void CarPark::set_name(string _name)
 	name = _name;
 }
 
-void CarPark::adding_by_pointer(PInfo ptr)
+void CarPark::insert(PPtr ptr)
 {
-	list<PInfo>::iterator beg = list_of_cars.begin();
+	list<PPtr>::iterator beg = list_of_cars.begin();
 	while (beg != list_of_cars.end() && (*beg)->compare(*ptr) == -1)
 		++beg;
 	list_of_cars.insert(beg, move(ptr));
 }
 
-void CarPark::remove(function<bool(const PInfo&)> _Pred)
+void CarPark::remove(function<bool(const PPtr&)> _Pred)
 {
-	list_of_cars.erase(remove_if(list_of_cars.begin(), list_of_cars.end(), _Pred), list_of_cars.end());
+	list_of_cars.remove_if(_Pred);
 }
 
 void CarPark::sort()
 {
-	list_of_cars.sort([](const PInfo& ptrFirst, const PInfo& ptrSecond)
+	list_of_cars.sort([](const PPtr& ptrFirst, const PPtr& ptrSecond)
 	{
 		return ptrFirst->compare(*ptrSecond) == -1;
 	});
@@ -48,6 +48,6 @@ void CarPark::sort()
 void CarPark::print()
 {
 	cout << "\n\t- " << name << " -\n";
-	for (const PInfo& ptr : list_of_cars)
+	for (const PPtr& ptr : list_of_cars)
 		ptr->print();
 }

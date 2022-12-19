@@ -2,18 +2,16 @@
 #include <vector>
 #include "car.h"
 #include <list>
-#include <memory> 
-#include <algorithm>
 #include <functional>
 
 using namespace std;
-using PInfo = unique_ptr<Car>;
+using PPtr = unique_ptr<Car>;
 
 class CarPark
 {
 private:
 	string name;
-	list<PInfo> list_of_cars;
+	list<PPtr> list_of_cars;
 public:
 	CarPark();
 	CarPark(string name);
@@ -23,8 +21,8 @@ public:
 
 	void set_name(string _name);
 
-	void adding_by_pointer(PInfo ptr);
-	void remove(function<bool(const PInfo&)> _Pred);
+	void insert(PPtr ptr);
+	void remove(function<bool(const PPtr&)> _Pred);
 	void sort();
 	void print();
 };
