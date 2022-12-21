@@ -89,20 +89,7 @@ using namespace std;
 //				t->count++;
 //}
 //
-//Tree search(const Tree& root, TInfo elem)
-//{
-//	Tree t = root, ptr = nullptr;
-//	while (t && !ptr)
-//	{
-//		if (elem < t->info)
-//			t = t->left;
-//		else
-//			if (elem > t->info)
-//				t = t->right;
-//			else
-//				ptr = t;
-//	}
-//	return ptr;
+//
 //}
 //
 //Tree Build_Search(std::string file_name)
@@ -251,60 +238,9 @@ using namespace std;
 //	return 0;
 //}
 
-void task_rec(Tree& t, int level, int& count)
-{
-	if (t)
-	{
-		if (level)
-		{
-			task_rec(t->left, level - 1, count);
-			task_rec(t->right, level - 1, count);
-		}
-		else
-			++count;
-	}
-}
 
-int task_rec2(Tree& t, int level)
-{
-	int result = 0;
-	if (t)
-	{
-		if (level)
-		{
-			result += task_rec2(t->left, level - 1);
-			result += task_rec2(t->right, level - 1);
-		}
-		else
-			++result;
-	}
-	return result;
-}
 
-//int count_on_level(Tree t, int level)
-//{
-//	int result = 0;
-//	if (t)
-//	{
-//		queue q;
-//		q.push({ 0, t });
-//		while (!q.empty())
-//		{
-//			Pair current = q.pop();
-//			if (current.level == level)
-//				result++;
-//			else if (current.level < level)
-//			{
-//				if (current.tree->left)
-//					q.push({ current.level + 1, current.tree->left });
-//				if (current.tree->right)
-//					q.push({ current.level + 1, current.tree->right });
-//			}
-//		}
-//	}
-//	return result;
-//}
-
+//Найти сумму листьев
 int task_1(Tree t, int sum = 0)
 {
 	if (t)
@@ -348,6 +284,7 @@ int task_1_1(Tree t)
 	return sum;
 }
 
+//Удалить листовые элементы
 bool task_2(Tree& t)
 {
 	bool result = true;
@@ -408,6 +345,7 @@ bool task_2_1(Tree& t)
 	return result;
 }
 
+//Найти количество отрицательных элементов
 int task_3(Tree t)
 {
 	int count = 0;
@@ -443,6 +381,7 @@ int task_3_1(Tree t)
 	return count;
 }
 
+//Найти максимальный по модулю элемент
 int task_4(Tree t)
 {
 	int max = abs(t->info);
@@ -478,6 +417,8 @@ int task_4_1(Tree t)
 	}
 }
 
+
+//Найти значение самого левого листа
 int task_5(Tree t)
 {
 	int result;
@@ -509,6 +450,7 @@ int task_5_1(Tree t)
 	}
 }
 
+//Заменить отрицательные элементы на их абсолютные величины
 void task_6(Tree& t)
 {
 	if (t)
@@ -540,6 +482,159 @@ void task_6_1(Tree& t)
 				q.push(tmp->right);
 		}
 	}
+}
+
+//Напечатать значения листьев
+void task_7(Tree t)
+{
+	if (t)
+	{
+		if (!t->right && !t->left)
+			std::cout << t->info << ' ';
+		if (t->right)
+			task_7(t->right);
+		if (t->left)
+			task_7(t->left);
+	}
+}
+
+void task_7_1(Tree t)
+{
+	if (t)
+	{
+		std::queue<Tree> q;
+		q.push(t);
+		while (!q.empty())
+		{
+			Tree tmp = q.front();
+			q.pop();
+
+			if (!tmp->right && !tmp->left)
+				std::cout << tmp->info << ' ';
+			if (tmp->right)
+				q.push(tmp->right);
+			if (tmp->left)
+				q.push(tmp->left);
+		}
+	}
+}
+
+//Проверить входит ли элемент E в дерево T
+int task_8(Tree t, int e)
+{
+	int result = 0;
+	if (t)
+	{
+		if (t->info == e)
+			result = 1;
+		else if (!result)
+		{
+			if (t->right)
+				result += task_8(t->right, e);
+			if (t->left)
+				result += task_8(t->left, e);
+		}
+	}
+	return result;
+}
+
+bool task_8_1(Tree t, TInfo e)
+{
+	bool result = false;
+	if (t)
+	{
+		std::queue<Tree> q;
+		q.push(t);
+		while (!q.empty() && !result)
+		{
+			Tree tmp = q.front();
+			q.pop();
+			
+			if (tmp->info == e)
+				result = true;
+			else
+			{
+				if (tmp->right)
+					q.push(tmp->right);
+				if (tmp->left)
+					q.push(tmp->left);
+			}
+		}
+	}
+	return result;
+}
+
+void task_rec(Tree& t, int level, int& count)
+{
+	if (t)
+	{
+		if (level)
+		{
+			task_rec(t->left, level - 1, count);
+			task_rec(t->right, level - 1, count);
+		}
+		else
+			++count;
+	}
+}
+
+int task_rec2(Tree& t, int level)
+{
+	int result = 0;
+	if (t)
+	{
+		if (level)
+		{
+			result += task_rec2(t->left, level - 1);
+			result += task_rec2(t->right, level - 1);
+		}
+		else
+			++result;
+	}
+	return result;
+}
+
+//Подсчитать количество элементов на n-ом уровне
+int task_9(Tree t, int level, int i = 0)
+{
+	int result = 0;
+	if (t)
+	{
+		if (i == level)
+			result++;
+		else if (i < level)
+		{
+			if (t->left)
+				result += task_9(t->left, level, i + 1);
+			if (t->right)
+				result += task_9(t->right, level, i + 1);
+		}
+	}
+	return result;
+}
+
+int task_9_1(Tree t, int level)
+{
+	int result = 0;
+	if (t)
+	{
+		std::queue<std::pair<int, Tree>> q;
+		q.push({ 0, t });
+		while (!q.empty())
+		{
+			std::pair<int, Tree> current = q.pop();
+			if (current.first == level)
+				result++;
+			else if (current.first < level)
+			{
+				if (current.second->left)
+					q.push({ current.first + 1, current.second->left });
+				if (current.second->right)
+					q.push({ current.first + 1, current.second->right });
+			}
+		}
+	}
+	return result;
 }
 
 int main()
@@ -609,12 +704,29 @@ int main()
 	
 	//=============[ TASK 7 ]=============
 	std::cout << "\n\n========[ TASK 7 ]========\n";
-	std::cout << task_5(root);
+	task_7(root);
 	std::cout << '\n';
-	std::cout << task_5_1(root);
+	task_7_1(root);
 
+	//=============[ TASK 8 ]=============
+	std::cout << "\n\n========[ TASK 8 ]========\n";
+	if (task_8(root, -6))
+		std::cout << "Yes";
+	else
+		std::cout << "No";
+	std::cout << '\n';
+	if (task_8_1(root, -6))
+		std::cout << "Yes";
+	else
+		std::cout << "No";
+	std::cout << '\n';
+
+	//=============[ TASK 9 ]=============
+	std::cout << "\n\n========[ TASK 9 ]========\n";
+	std::cout << task_9(root, 1);
+	std::cout << '\n';
+	std::cout << task_9_1(root, 1);
 
 	Clear(root);
 	std::cin.get();
-	return 0;
 }
