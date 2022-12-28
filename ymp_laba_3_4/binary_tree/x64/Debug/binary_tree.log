@@ -1,4 +1,4 @@
 ﻿  Source.cpp
-D:\GitHub\ymp\ymp_laba_3_4\binary_tree\Source.cpp(470): warning C4715: task_4_1: значение возвращается не при всех путях выполнения
-D:\GitHub\ymp\ymp_laba_3_4\binary_tree\Source.cpp(503): warning C4715: task_5_1: значение возвращается не при всех путях выполнения
+D:\GitHub\ymp\ymp_laba_3_4\binary_tree\Source.cpp(418): warning C4715: task_4_1: значение возвращается не при всех путях выполнения
+D:\GitHub\ymp\ymp_laba_3_4\binary_tree\Source.cpp(451): warning C4715: task_5_1: значение возвращается не при всех путях выполнения
   binary_tree.vcxproj -> D:\GitHub\ymp\ymp_laba_3_4\x64\Debug\binary_tree.exe

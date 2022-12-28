@@ -47,7 +47,7 @@ void Clear(Tree& t)
 	}
 }
 
-void Print(Tree t, int level)
+void Print(Tree t, int level = 0)
 {
 	if (t)
 	{

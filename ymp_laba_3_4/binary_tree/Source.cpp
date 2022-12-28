@@ -622,7 +622,8 @@ int task_9_1(Tree t, int level)
 		q.push({ 0, t });
 		while (!q.empty())
 		{
-			std::pair<int, Tree> current = q.pop();
+			std::pair<int, Tree> current = q.front();
+			q.pop();
 			if (current.first == level)
 				result++;
 			else if (current.first < level)
@@ -634,6 +635,141 @@ int task_9_1(Tree t, int level)
 			}
 		}
 	}
+	return result;
+}
+
+//Построить дерево заданного вида
+Tree task_10(int n)
+{
+	Tree result = nullptr;
+	if (n)
+	{
+		result = new NODE(n);
+		result->left = task_10(n - 1);
+		result->right = task_10(n - 1);
+	}
+	return result;
+}
+
+Tree task_10_1(int n)
+{
+	Tree result = new NODE(n--);
+	std::queue<std::pair<Tree, int>> q;
+	q.push({result, n});
+	while (!q.empty())
+	{
+		auto tmp = q.front();
+		q.pop();
+		tmp.first->right = new NODE(tmp.second);
+		tmp.first->left = new NODE(tmp.second);
+		if (tmp.second > 1)
+		{
+			q.push({ tmp.first->right, tmp.second - 1 });
+			q.push({ tmp.first->left, tmp.second - 1});
+		}
+	}
+	return result;
+}
+
+Tree task_11(int n, int i = 1)
+{
+	Tree result = nullptr;
+	if (i < n + 1)
+	{
+		result = new NODE(i);
+		result->right = task_11(n, i + 1);
+		result->left = task_11(n, i + 1);
+	}
+	return result;
+}
+
+Tree task_11_1(int n)
+{
+	Tree result = new NODE(1);
+	std::queue<std::pair<Tree, int>> q;
+	q.push({ result, 2 });
+	while (!q.empty())
+	{
+		auto tmp = q.front();
+		q.pop();
+		if (tmp.second < n + 1)
+		{
+			tmp.first->right = new NODE(tmp.second);
+			tmp.first->left = new NODE(tmp.second);
+			q.push({ tmp.first->right, tmp.second + 1 });
+			q.push({ tmp.first->left, tmp.second + 1 });
+		}
+	}
+	return result;
+}
+
+//Посчитать количество максимальных элементов
+int task_12_find_max(Tree t)
+{
+	int result = -30000;
+	if (t)
+	{
+		result = t->info;
+		if (t->right)
+			if (task_12_find_max(t->right) > result)
+				result = task_12_find_max(t->right);
+		if (t->left)
+			if (task_12_find_max(t->left) > result)
+				result = task_12_find_max(t->left);
+	}
+	return result;
+}
+
+int task_12(Tree t, int& max)
+{
+	int result = 0;
+	if (t)
+	{
+		if (t->info == max)
+			result = 1;
+		if (t->right)
+			result += task_12(t->right, max);
+		if (t->left)
+			result += task_12(t->left, max);
+	}
+	return result;
+}
+
+int task_12_1(Tree t)
+{
+	int result = 0;
+	if (t)
+	{
+		std::queue<Tree> q;
+		q.push(t);
+		int max = t->info;
+		while (!q.empty())
+		{
+			Tree tmp = q.front();
+			q.pop();
+			if (tmp->info == max)
+				result += 1;
+			else if (tmp->info > max)
+			{
+				result = 1;
+				max = tmp->info;
+			}
+
+			if (tmp->right)
+				q.push(tmp->right);
+			if (tmp->left)
+				q.push(tmp->left);
+		}
+	}
+	return result;
+}
+
+//Найти максимальную глубину дерева
+int task_13(Tree t)
+{
+	int result = 0;
+	if (t)
+		result = max(task_13(t->left), task_13(t->right)) + 1;
 	return result;
 }
 
@@ -727,6 +863,53 @@ int main()
 	std::cout << '\n';
 	std::cout << task_9_1(root, 1);
 
+	//=============[ TASK 10 ]=============
+	std::cout << "\n\n========[ TASK 10 ]========\n";
+	{
+		Tree tmp = task_10(4);
+		//Print(tmp, 0);
+		std::cout << '\n';
+	}
+	{
+		Tree tmp = task_10_1(4);
+		Print(tmp);
+	}
+
+	//=============[ TASK 11 ]=============
+	std::cout << "\n\n========[ TASK 11 ]========\n";
+	{
+		Tree tmp = task_11(4);
+		//Print(tmp);
+		std::cout << '\n';
+		Clear(tmp);
+	}
+	{
+		Tree tmp = task_11_1(4);
+		//Print(tmp);
+		Clear(tmp);
+	}
+
+	//=============[ TASK 12 ]=============
+	std::cout << "\n\n========[ TASK 12 ]========\n";
+	{
+		ifstream file("tree.txt");
+		file >> count;
+		Tree tmp_root = Build_Balance(file, count);
+		int max = task_12_find_max(tmp_root);
+		std::cout << task_12(tmp_root, max);
+		std::cout << ' ' << task_12_1(tmp_root);
+		Clear(tmp_root);
+	}
+	//=============[ TASK 13 ]=============
+	std::cout << "\n\n========[ TASK 13 ]========\n";
+	{
+		ifstream file("tree.txt");
+		file >> count;
+		Tree tmp_root = Build_Balance(file, count);
+		Print(tmp_root);
+		std::cout << task_13(tmp_root);
+		Clear(tmp_root);
+	}
 	Clear(root);
 	std::cin.get();
 }
