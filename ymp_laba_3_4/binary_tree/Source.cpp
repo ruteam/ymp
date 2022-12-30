@@ -773,6 +773,109 @@ int task_13(Tree t)
 	return result;
 }
 
+int task_13_1(Tree t)
+{
+	int result = 0;
+	if (t)
+	{
+		std::queue<std::pair<Tree, int>> q;
+		q.push({t, 1});
+		while (!q.empty())
+		{
+			auto tmp = q.front();
+			q.pop();
+			if (tmp.second > result)
+				result = tmp.second;
+			if (tmp.first->right)
+				q.push({ tmp.first->right, tmp.second + 1 });
+			if (tmp.first->left)
+				q.push({ tmp.first->left, tmp.second + 1 });
+		}
+	}
+	return result;
+}
+
+//Найти длину(число ветвей) пути от корня до ближайшей вершины
+//с элементом Е. Если Е не входит - вывести -1
+
+///?????????????????///
+
+int task_14_1(Tree t, TInfo e)
+{
+	int result = -1;
+	if (t)
+	{
+		std::queue<std::pair<Tree, int>> q;
+		q.push({ t, 0 });
+		while (!q.empty() && result == -1)
+		{
+			auto tmp = q.front();
+			q.pop();
+			if (tmp.first->info == e)
+				result = tmp.second;
+			else
+			{
+				if (tmp.first->left)
+					q.push({ tmp.first->left, tmp.second + 1 });
+				if (tmp.first->right)
+					q.push({ tmp.first->right, tmp.second + 1 });
+			}
+		}
+	}
+	return result;
+}
+
+//Построить копию дерева без листьев
+Tree task_15(Tree t)
+{
+	Tree result = nullptr;
+	if (t)
+	{
+		result = new NODE(t->info);
+		if (t->right)
+			if (t->right->right || t->right->left)
+				result->right = task_15(t->right);
+		if (t->left)
+			if (t->left->right || t->left->left)
+				result->left = task_15(t->left);
+	}
+	return result;
+}
+
+Tree task_15_1(Tree t)
+{
+	Tree result = nullptr;
+	if (t)
+	{
+		std::queue<std::pair<Tree, Tree>> q;
+		if (t->right || t->left)
+			result = new NODE(t->info);
+		q.push({ result, t });
+		while (!q.empty())
+		{
+			auto tmp = q.front();
+			q.pop();
+			if (tmp.second->right)
+			{
+				if (tmp.second->right->right || tmp.second->right->left)
+				{
+					tmp.first->right = new NODE(tmp.second->right->info);
+					q.push({ tmp.first->right, tmp.second->right });
+				}
+			}
+			if (tmp.second->left)
+			{
+				if (tmp.second->left->right || tmp.second->left->left)
+				{
+					tmp.first->left = new NODE(tmp.second->left->info);
+					q.push({ tmp.first->left, tmp.second->left });
+				}
+			}
+		}
+	}
+	return result;
+}
+
 int main()
 {
 	ifstream file("tree.txt");
@@ -900,6 +1003,7 @@ int main()
 		std::cout << ' ' << task_12_1(tmp_root);
 		Clear(tmp_root);
 	}
+
 	//=============[ TASK 13 ]=============
 	std::cout << "\n\n========[ TASK 13 ]========\n";
 	{
@@ -908,7 +1012,35 @@ int main()
 		Tree tmp_root = Build_Balance(file, count);
 		Print(tmp_root);
 		std::cout << task_13(tmp_root);
+		std::cout << ' ' << task_13_1(tmp_root);
 		Clear(tmp_root);
+	}
+
+	//=============[ TASK 14 ]=============
+	std::cout << "\n\n========[ TASK 14 ]========\n";
+	{
+		ifstream file("tree.txt");
+		file >> count;
+		Tree tmp_root = Build_Balance(file, count);
+		Print(tmp_root);
+		bool flag = 0;
+		//std::cout << len_way(tmp_root, 2, 0, flag);
+		std::cout << ' ' << task_14_1(tmp_root, 5);
+		Clear(tmp_root);
+	}
+
+	//=============[ TASK 15 ]=============
+	std::cout << "\n\n========[ TASK 15 ]========\n";
+	{
+		ifstream file("tree.txt");
+		file >> count;
+		Tree tmp_root = Build_Balance(file, count);
+		Print(tmp_root);
+		std::cout << "\n-------------\n";
+		Tree tm = task_15_1(tmp_root);
+		Print(tm);
+		Clear(tmp_root);
+		Clear(tm);
 	}
 	Clear(root);
 	std::cin.get();
